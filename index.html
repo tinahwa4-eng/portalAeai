@@ -1,101 +1,142 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Pendaftaran Marga AEAI</title>
+<meta charset="UTF-8">
+<title>Pendaftaran Marga AEAI</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0f172a, #1e293b);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 
-    .container {
-      background: rgba(30, 41, 59, 0.9);
-      padding: 25px;
-      border-radius: 15px;
-      width: 320px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
+.container {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  width: 350px;
+}
 
-    h1 {
-      text-align: center;
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
+input, textarea, button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
 
-    input, button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-    }
+input, textarea {
+  background: #334155;
+  color: white;
+}
 
-    input {
-      background: #334155;
-      color: white;
-    }
+button {
+  background: #22c55e;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    button {
-      background: #22c55e;
-      font-weight: bold;
-      cursor: pointer;
-    }
+#hasil, #kartu, #linkWa {
+  display: none;
+  margin-top: 15px;
+  text-align: center;
+}
 
-    #linkWa {
-      display: none;
-      margin-top: 15px;
-      text-align: center;
-    }
-
-    a {
-      color: #4ade80;
-      text-decoration: none;
-      font-weight: bold;
-    }
-  </style>
+canvas {
+  margin-top: 10px;
+  background: white;
+  border-radius: 10px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
-  <h1>Pendaftaran Marga AEAI</h1>
+<h2>Pendaftaran Marga AEAI</h2>
 
-  <input type="text" id="nama" placeholder="Nama Lengkap">
-  <input type="number" id="umur" placeholder="Umur">
-  <input type="date" id="tgl">
-  <input type="text" id="tiktok" placeholder="Link TikTok">
-  <input type="text" id="tujuan" placeholder="Tujuan Masuk">
+<input type="text" id="nama" placeholder="Nama">
+<input type="number" id="umur" placeholder="Umur">
+<input type="date" id="tgl">
+<input type="text" id="tiktok" placeholder="Link TikTok">
+<textarea id="tujuan" placeholder="Tujuan masuk"></textarea>
 
-  <button onclick="daftar()">Daftar</button>
+<textarea id="tes" placeholder="Apa yang kamu ketahui tentang astronomi?"></textarea>
 
-  <div id="linkWa">
-    <p>Selamat datang di Marga AEAI</p>
-    <a href="https://chat.whatsapp.com/FXOjJQlu9qrKu2bcAouLEW?mode=gi_t" target="_blank">
-      Masuk Grup WhatsApp
-    </a>
-  </div>
+<button onclick="proses()">Daftar</button>
+
+<div id="hasil"></div>
+
+<div id="kartu">
+  <p>Kartu Anggota:</p>
+  <canvas id="card" width="300" height="150"></canvas>
+  <br>
+  <button onclick="downloadCard()">Download Kartu</button>
+</div>
+
+<div id="linkWa">
+  <p>Selamat! Kamu diterima 🎉</p>
+  <a href="https://chat.whatsapp.com/GANTI_LINK_KAMU" target="_blank">
+    Masuk Grup WhatsApp
+  </a>
+</div>
+
 </div>
 
 <script>
-function daftar() {
+function proses() {
   let nama = document.getElementById("nama").value;
   let umur = document.getElementById("umur").value;
   let tgl = document.getElementById("tgl").value;
   let tiktok = document.getElementById("tiktok").value;
   let tujuan = document.getElementById("tujuan").value;
+  let tes = document.getElementById("tes").value;
 
-  if(nama && umur && tgl && tiktok && tujuan) {
-    document.getElementById("linkWa").style.display = "block";
-  } else {
-    alert("Isi semua data dulu.");
+  if(!nama || !umur || !tgl || !tiktok || !tujuan || !tes){
+    alert("Isi semua dulu bro.");
+    return;
   }
+
+  let lulus = Math.random() < 0.98;
+
+  let hasilDiv = document.getElementById("hasil");
+  hasilDiv.style.display = "block";
+
+  if(lulus){
+    hasilDiv.innerHTML = "Status: LULUS ✅";
+    document.getElementById("kartu").style.display = "block";
+    document.getElementById("linkWa").style.display = "block";
+    buatKartu(nama);
+  } else {
+    hasilDiv.innerHTML = "Status: TIDAK LULUS ❌";
+  }
+}
+
+function buatKartu(nama){
+  let canvas = document.getElementById("card");
+  let ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "#0f172a";
+  ctx.fillRect(0,0,300,150);
+
+  ctx.fillStyle = "white";
+  ctx.font = "16px Arial";
+  ctx.fillText("Kartu Marga AEAI", 70, 30);
+
+  ctx.font = "14px Arial";
+  ctx.fillText("Nama: " + nama, 20, 80);
+}
+
+function downloadCard(){
+  let canvas = document.getElementById("card");
+  let link = document.createElement('a');
+  link.download = "kartu_aeai.png";
+  link.href = canvas.toDataURL();
+  link.click();
 }
 </script>
 
