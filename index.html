@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Pendaftaran Marga AEAI</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: rgba(30, 41, 59, 0.9);
+      padding: 25px;
+      border-radius: 15px;
+      width: 320px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    input, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    input {
+      background: #334155;
+      color: white;
+    }
+
+    button {
+      background: #22c55e;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #linkWa {
+      display: none;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    a {
+      color: #4ade80;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Pendaftaran Marga AEAI</h1>
+
+  <input type="text" id="nama" placeholder="Nama Lengkap">
+  <input type="number" id="umur" placeholder="Umur">
+  <input type="date" id="tgl">
+  <input type="text" id="tiktok" placeholder="Link TikTok">
+  <input type="text" id="tujuan" placeholder="Tujuan Masuk">
+
+  <button onclick="daftar()">Daftar</button>
+
+  <div id="linkWa">
+    <p>Selamat datang di Marga AEAI</p>
+    <a href="https://chat.whatsapp.com/FXOjJQlu9qrKu2bcAouLEW?mode=gi_t" target="_blank">
+      Masuk Grup WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+function daftar() {
+  let nama = document.getElementById("nama").value;
+  let umur = document.getElementById("umur").value;
+  let tgl = document.getElementById("tgl").value;
+  let tiktok = document.getElementById("tiktok").value;
+  let tujuan = document.getElementById("tujuan").value;
+
+  if(nama && umur && tgl && tiktok && tujuan) {
+    document.getElementById("linkWa").style.display = "block";
+  } else {
+    alert("Isi semua data dulu.");
+  }
+}
+</script>
+
+</body>
+</html>
